@@ -13,15 +13,21 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity\Traits;
 
-
 use Ramsey\Uuid\UuidInterface;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Trait IdTrait
+ *
+ * @author Romain Bayette <romainromss@posteo.net>
+ */
 trait IdTrait
 {
     /**
      * @var UuidInterface
      *
-     * @ORM\Column(type='uuid')
+     * @ORM\Id
+     * @ORM\Column(type="uuid")
      */
     protected $id;
 

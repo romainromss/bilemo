@@ -11,7 +11,7 @@ if (PHP_VERSION_ID < 70000) {
 }
 
 if (!$env) {
-    $env = 'prod';
+    $env = 'dev';
 }
 if (($useDebug = getenv('SYMFONY_DEBUG')) === false || '' === $useDebug) {
     $useDebug = $env === 'dev';
@@ -20,7 +20,7 @@ if ('dev' === $env) {
     Debug::enable();
 }
 
-$kernel = new AppKernel('prod', false);
+$kernel = new AppKernel('dev', false);
 if (PHP_VERSION_ID < 70000) {
     $kernel->loadClassCache();
 }
