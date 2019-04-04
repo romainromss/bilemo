@@ -36,6 +36,6 @@ class LoaderPhoneList extends AbstractLoader
             return null;
         }
 
-        return $this->dataFormatted($data);
+        return $this->dataFormatted($data, 'list_phone');
     }
 }

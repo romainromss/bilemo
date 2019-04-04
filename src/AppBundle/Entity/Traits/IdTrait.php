@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity\Traits;
 
-use Ramsey\Uuid\UuidInterface;
+use JMS\Serializer\Annotation as Serializer;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,17 +24,19 @@ use Doctrine\ORM\Mapping as ORM;
 trait IdTrait
 {
     /**
-     * @var UuidInterface
+     * @var string
      *
      * @ORM\Id
      * @ORM\Column(type="uuid")
+     * @Serializer\Groups({"list_phone"})
      */
     protected $id;
 
     /**
-     * @return UuidInterface
+     * @return string
+     *
      */
-    public function getId(): UuidInterface
+    public function getId()
     {
         return $this->id;
     }

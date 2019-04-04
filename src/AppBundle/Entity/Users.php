@@ -13,27 +13,23 @@ declare(strict_types=1);
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class Users.
  *
  * @author Romain Bayette <romainromss@posteo.net>
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="Users")
+ * @Serializer\ExclusionPolicy("all")
  */
-class Users extends AbstractEntity implements UserInterface
+class Users extends AbstractEntity
 {
     /**
      * @var string
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $username;
-
-    /**
-     * @var string
+     * @Serializer\Expose()
+     * @Serializer\Groups({"details_user", "list_users"})
      *
      * @ORM\Column(type="string")
      */
@@ -43,6 +39,8 @@ class Users extends AbstractEntity implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"details_user", "list_users"})
      */
     protected $lastname;
 
@@ -50,13 +48,8 @@ class Users extends AbstractEntity implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string")
-     */
-    protected $password;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"details_user", "list_users"})
      */
     protected $email;
 
@@ -64,55 +57,33 @@ class Users extends AbstractEntity implements UserInterface
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"details_user", "list_users"})
      */
-    protected $b2b;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string")
-     */
-    protected $role;
+    protected $cellPhone;
 
     /**
      * Users constructor.
      *
-     * @param string $username
      * @param string $name
      * @param string $lastname
-     * @param string $password
      * @param string $email
-     * @param string $b2b
-     * @param string $role
+     * @param string $cellPhone
      *
      * @throws \Exception
      */
     public function __construct(
-        string $username,
         string $name,
         string $lastname,
-        string $password,
         string $email,
-        string $b2b,
-        string $role
+        string $cellPhone
     )
     {
-        $this->username = $username;
         $this->name = $name;
         $this->lastname = $lastname;
-        $this->password = $password;
         $this->email = $email;
-        $this->b2b = $b2b;
-        $this->role = $role;
+        $this->cellPhone = $cellPhone;
         parent::__construct();
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername(): string
-    {
-        return $this->username;
     }
 
     /**
@@ -134,52 +105,13 @@ class Users extends AbstractEntity implements UserInterface
     /**
      * @return string
      */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @return string
-     */
-    public function getB2b(): string
+    public function getCellPhone(): string
     {
-        return $this->b2b;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole(): string
-    {
-        return $this->role;
-    }
-
-    /**
-     * @return array (Role|string)[] The user roles
-     */
-    public function getRoles()
-    {
-        return ['ROLE_USER'];
-    }
-
-    /**
-     * @return string|null The salt
-     */
-    public function getSalt()
-    {
-        return $this->password;
-    }
-
-    public function eraseCredentials()
-    {
+        return $this->cellPhone;
     }
 }

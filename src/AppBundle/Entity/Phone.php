@@ -12,8 +12,9 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class Phone.
@@ -22,6 +23,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PhoneRepository")
  * @ORM\Table(name="Phone")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Phone extends AbstractEntity
 {
@@ -29,29 +31,72 @@ class Phone extends AbstractEntity
      * @var string
      *
      * @ORM\Column(type="string")
-     * @Groups({"list_phone"})
+     * @Serializer\Expose()
+     * @Serializer\Groups({"details_phone", "list_phone"})
      */
     protected $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"details_phone", "list_phone"})
      */
     protected $description;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"details_phone", "list_phone"})
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Memory", cascade={"persist"})
+     * @ORM\JoinTable(name="phone_memory",
+     *     joinColumns={@ORM\JoinColumn(referencedColumnName="id", name="phone_id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(referencedColumnName="id", name="memory_id")}
+     *     )
+     */
+    protected $memory;
+
+    /**
+     * @var
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"details_phone", "list_phone"})
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", cascade={"persist"})
+     */
+    protected $brand;
+
+    /**
+     * @var Os
+     *
+     * @Serializer\Expose()
+     * @Serializer\Groups({"details_phone", "list_phone"})
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Os", cascade={"persist"})
+     */
+    protected $os;
 
     /**
      * Phone constructor.
      *
      * @param string $name
      * @param string $description
-     *
+     * @param string $brand
+     * @param string $os
      * @throws \Exception
      */
     public function __construct(
         string $name,
-        string $description
+        string $description,
+        string $brand,
+        string $os
     ) {
         $this->name = $name;
         $this->description = $description;
+        $this->memory = new ArrayCollection();
+        $this->brand = $brand;
+        $this->os = $os;
         parent::__construct();
     }
 
@@ -69,5 +114,29 @@ class Phone extends AbstractEntity
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMemory(): ArrayCollection
+    {
+        return $this->memory;
+    }
+
+    /**
+     * @return Brand
+     */
+    public function getBrand(): Brand
+    {
+        return $this->brand;
+    }
+
+    /**
+     * @return Os
+     */
+    public function getOs(): Os
+    {
+        return $this->os;
     }
 }

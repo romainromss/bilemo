@@ -33,6 +33,6 @@ class LoaderDetailPhone extends AbstractLoader
             return null;
         }
 
-        return $this->dataFormatted($data);
+        return $this->dataFormatted($data, 'details_phone');
     }
 }

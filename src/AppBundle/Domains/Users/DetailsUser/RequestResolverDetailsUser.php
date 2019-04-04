@@ -2,19 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: romss
- * Date: 2019-03-14
- * Time: 18:29
+ * Date: 2019-03-21
+ * Time: 19:48
  */
 
-namespace AppBundle\Domains\Phones\ListPhones;
+namespace AppBundle\Domains\Users\DetailsUser;
 
 
 use AppBundle\Domains\AbstractRequestResolver;
 use Doctrine\ORM\EntityManagerInterface;
-use ReflectionException;
 use Symfony\Component\HttpFoundation\Request;
 
-class RequestResolverListPhone extends AbstractRequestResolver
+class RequestResolverDetailsUser extends AbstractRequestResolver
 {
     /**
      * @var EntityManagerInterface
@@ -32,16 +31,19 @@ class RequestResolverListPhone extends AbstractRequestResolver
      *
      * @return mixed
      *
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
     public function resolver(Request $request)
     {
         $input = $this->instanciateInputClass();
+        $input->setClient($request->attributes->get('client_id'));
+        $input->setUser($request->attributes->get('user_id'));
+
         return $input;
     }
 
     protected function getInputclassName(): string
     {
-        return ListPhoneInput::class;
+        return DetailsUserInput::class;
     }
 }

@@ -41,7 +41,7 @@ class ListPhonesAction extends AbstractAction
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function ListArticlesAction()
+    public function ListPhones()
     {
         $datas =  $this->loader->load();
         return $this->sendResponse($datas);

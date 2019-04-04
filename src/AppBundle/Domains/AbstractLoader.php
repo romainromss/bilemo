@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace AppBundle\Domains;
 
-use AppBundle\Domains\Phones\DetailsPhone\DetailsPhoneInput;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 
 /**
@@ -54,11 +54,12 @@ abstract class AbstractLoader
         return $this->entityManager->getRepository($className);
     }
 
-    public function dataFormatted($data)
+    public function dataFormatted($data, $group = null )
     {
         return $this->serializer->serialize(
             $data,
-            'json'
+            'json',
+            SerializationContext::create()->setGroups($group)
         );
     }
 }
