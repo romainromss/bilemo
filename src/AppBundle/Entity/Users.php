@@ -61,28 +61,37 @@ class Users extends AbstractEntity
      * @Serializer\Groups({"details_user", "list_users"})
      */
     protected $cellPhone;
-
-    /**
-     * Users constructor.
-     *
-     * @param string $name
-     * @param string $lastname
-     * @param string $email
-     * @param string $cellPhone
-     *
-     * @throws \Exception
-     */
+  
+  /**
+   * @var Client
+   *
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client", cascade={"persist"})
+   */
+    protected $client;
+  
+  /**
+   * Users constructor.
+   *
+   * @param string $name
+   * @param string $lastname
+   * @param string $email
+   * @param string $cellPhone
+   * @param Client $client
+   *
+   * @throws \Exception
+   */
     public function __construct(
         string $name,
         string $lastname,
         string $email,
-        string $cellPhone
-    )
-    {
+        string $cellPhone,
+        Client $client
+    ) {
         $this->name = $name;
         $this->lastname = $lastname;
         $this->email = $email;
         $this->cellPhone = $cellPhone;
+        $this->client = $client;
         parent::__construct();
     }
 
@@ -109,9 +118,20 @@ class Users extends AbstractEntity
     {
         return $this->email;
     }
-
+  
+  /**
+   * @return string
+   */
     public function getCellPhone(): string
     {
         return $this->cellPhone;
     }
+  
+  /**
+   * @return Client
+   */
+  public function getClient(): Client
+  {
+    return $this->client;
+  }
 }

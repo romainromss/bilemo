@@ -29,47 +29,48 @@ class Client extends AbstractEntity implements UserInterface
      * @ORM\Column(type="string")
      */
     protected $username;
+    
     /**
      * @var string
      *
      * @ORM\Column(type="string")
      */
     protected $name;
+    
     /**
      * @var string
      *
      * @ORM\Column(type="string")
      */
     protected $lastname;
+    
     /**
      * @var string
      *
      * @ORM\Column(type="string")
      */
     protected $password;
+    
     /**
      * @var string
      *
      * @ORM\Column(type="string")
      */
     protected $email;
+    
     /**
      * @var array
      *
      * @ORM\Column(type="array")
      */
     protected $role;
+    
     /**
      * @var string
      *
      * @ORM\Column(type="string")
      */
     protected $b2b;
-
-    /**
-     * @var ArrayCollection
-     */
-    protected $users;
 
     /**
      * Client constructor.
@@ -98,7 +99,6 @@ class Client extends AbstractEntity implements UserInterface
         $this->email = $email;
         $this->role = ['ROLE_CLIENT'];
         $this->b2b = $b2b;
-        $this->users = new ArrayCollection();
         parent::__construct();
     }
 
@@ -148,14 +148,6 @@ class Client extends AbstractEntity implements UserInterface
     public function getB2b(): string
     {
         return $this->b2b;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getUsers(): ArrayCollection
-    {
-        return $this->users;
     }
 
     /**

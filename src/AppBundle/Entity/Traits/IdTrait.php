@@ -26,6 +26,7 @@ trait IdTrait
     /**
      * @var string
      *
+     * @JMS\Type("uuid")
      * @ORM\Id
      * @ORM\Column(type="uuid")
      * @Serializer\Groups({"list_phone"})

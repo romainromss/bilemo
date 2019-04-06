@@ -33,6 +33,11 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
+    mhujer.jms_serializer.uuid.uuid_serializer_handler:
+        class: Mhujer\JmsSerializer\Uuid\UuidSerializerHandler
+        tags:
+            - { name: jms_serializer.subscribing_handler }
+
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:

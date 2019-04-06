@@ -125,9 +125,9 @@ class Phone extends AbstractEntity
     }
 
     /**
-     * @return Brand
+     * @return string
      */
-    public function getBrand(): Brand
+    public function getBrand(): string
     {
         return $this->brand;
     }
