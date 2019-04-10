@@ -25,7 +25,7 @@ class AddUserInput
     /**
      * @var string
      */
-    protected $adress;
+    protected $cellphone;
 
     /**
      * @var string
@@ -72,17 +72,17 @@ class AddUserInput
     /**
      * @return string
      */
-    public function getAdress(): string
+    public function getCellPhone(): string
     {
-        return $this->adress;
+        return $this->cellphone;
     }
 
     /**
-     * @param string $adress
+     * @param string $cellphone
      */
-    public function setAdress(string $adress): void
+    public function setCellphone(string $cellphone): void
     {
-        $this->adress = $adress;
+        $this->cellphone = $cellphone;
     }
 
     /**

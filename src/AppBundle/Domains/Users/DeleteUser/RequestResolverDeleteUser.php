@@ -9,12 +9,16 @@
 namespace AppBundle\Domains\Users\DeleteUser;
 
 use AppBundle\Domains\AbstractRequestResolver;
+use AppBundle\Domains\Security\ClientVoter;
 use AppBundle\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
 
 class RequestResolverDeleteUser extends AbstractRequestResolver
 {
@@ -22,34 +26,41 @@ class RequestResolverDeleteUser extends AbstractRequestResolver
    * @var EntityManagerInterface
    */
   protected $entityManager;
-  
+
   /**
    * @var UserRepository
    */
   private $userRepository;
-  
+
   /**
-   * @var Security
+   * @var AuthorizationCheckerInterface
    */
-  private $security;
-  
-  /**
-   * RequestResolverDeleteUser constructor.
-   *
-   * @param EntityManagerInterface $entityManager
-   * @param UserRepository         $userRepository
-   * @param Security               $security
-   */
+  private $authorizationChecker;
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+
+    /**
+     * RequestResolverDeleteUser constructor.
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param UserRepository $userRepository
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param TokenStorageInterface $tokenStorage
+     */
   public function __construct(
     EntityManagerInterface $entityManager,
     UserRepository $userRepository,
-    Security $security
+    AuthorizationCheckerInterface $authorizationChecker,
+    TokenStorageInterface $tokenStorage
   ) {
     $this->entityManager = $entityManager;
     $this->userRepository = $userRepository;
-    $this->security = $security;
+    $this->authorizationChecker = $authorizationChecker;
+    $this->tokenStorage = $tokenStorage;
   }
-  
+
   /**
    * @param Request $request
    *
@@ -59,21 +70,29 @@ class RequestResolverDeleteUser extends AbstractRequestResolver
    */
   public function resolver(Request $request)
   {
-    $clientId = $request->attributes->get('id_client');
-    $idUser = $request->attributes->get('id_user');
-    
-    if( !$this->security->isGranted('', $clientId)) {
-      throw new AccessDeniedHttpException(
+    $client = $this->tokenStorage->getToken()->getUser();
+
+    $userId = $request->attributes->get('user_id');
+    $userExist = $this->userRepository->userExist($userId);
+
+    if ($userExist == null) {
+        throw new NotFoundHttpException(
+          'cet utilisateur n\'existe pas'
+        );
+    }
+
+    if($userExist->getClient() != $client && !$this->authorizationChecker->isGranted(ClientVoter::CLIENT_VOTER, $client)) {
+        throw new AccessDeniedHttpException(
         'vous ne pouvez pas supprimer cet utilisateur'
       );
     }
-    
-    $user = $this->userRepository->getUserById($idUser);
+
+    $user = $this->userRepository->getUserById($userId);
     $input = $this->instanciateInputClass();
     $input->setUser($user);
     return $input;
   }
-  
+
   /**
    * @return string
    */

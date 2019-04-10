@@ -9,59 +9,86 @@
 namespace AppBundle\Domains\Users\DetailsUser;
 
 use AppBundle\Domains\AbstractRequestResolver;
+use AppBundle\Domains\Security\ClientVoter;
+use AppBundle\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RequestResolverDetailsUser extends AbstractRequestResolver
 {
-  /**
-   * @var EntityManagerInterface
-   */
-  protected $entityManager;
-  /**
-   * @var Security
-   */
-  private $security;
-  
-  public function __construct(
-    EntityManagerInterface $entityManager,
-    Security $security
-  ) {
-    $this->entityManager = $entityManager;
-    $this->security = $security;
-  }
-  
-  /**
-   * @param Request $request
-   *
-   * @return mixed
-   *
-   * @throws \ReflectionException
-   */
-  public function resolver(Request $request)
-  {
-    $clientId = $request->attributes->get('client_id');
-    
-    if( !$this->security->isGranted('', $clientId)) {
-      throw new AccessDeniedHttpException(
-        'vous ne pouvez pas consulter cet utilisateur'
-      );
+    /**
+     * @var EntityManagerInterface
+     */
+    protected $entityManager;
+
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $authorizationChecker;
+
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UserRepository $userRepository,
+        AuthorizationCheckerInterface $authorizationChecker,
+        TokenStorageInterface $tokenStorage
+    ) {
+        $this->entityManager = $entityManager;
+        $this->userRepository = $userRepository;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->tokenStorage = $tokenStorage;
     }
-    
-    $input = $this->instanciateInputClass();
-    $input->setClient($clientId);
-    $input->setUser($request->attributes->get('user_id'));
-    
-    return $input;
-  }
-  
-  /**
-   * @return string
-   */
-  protected function getInputclassName(): string
-  {
-    return DetailsUserInput::class;
-  }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     *
+     * @throws \ReflectionException
+     */
+    public function resolver(Request $request)
+    {
+        $client = $this->tokenStorage->getToken()->getUser();
+        $userId = $request->attributes->get('user_id');
+        $userExist = $this->userRepository->userExist($userId);
+
+        if ($userExist == null) {
+            throw new NotFoundHttpException(
+                'cet utilisateur n\'existe pas'
+            );
+        }
+
+        if($userExist->getClient() != $client && !$this->authorizationChecker->isGranted(ClientVoter::CLIENT_VOTER, $client)) {
+            throw new AccessDeniedHttpException(
+                'vous ne pouvez pas consulter cet utilisateur'
+            );
+        }
+
+        $input = $this->instanciateInputClass();
+        $input->setClient($client->getId()->toString());
+        $input->setUser($request->attributes->get('user_id'));
+
+        return $input;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getInputclassName(): string
+    {
+        return DetailsUserInput::class;
+    }
 }

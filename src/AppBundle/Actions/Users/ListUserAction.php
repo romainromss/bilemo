@@ -10,6 +10,7 @@ namespace AppBundle\Actions\Users;
 
 use AppBundle\Actions\AbstractAction;
 use AppBundle\Domains\Users\ListUsers\LoaderListUsers;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ListUserAction extends AbstractAction
@@ -28,13 +29,13 @@ class ListUserAction extends AbstractAction
     }
 
     /**
-     * @Route("/clients/{id_client}/users", name="list_users", methods={"GET"})
+     * @Route("/clients/{client_id}/users", name="list_users", methods={"GET"})
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function ListUsers()
+    public function ListUsers(Request $request)
     {
-        $datas =  $this->loader->load();
+        $datas =  $this->loader->load($request);
         return $this->sendResponse($datas);
     }
 }

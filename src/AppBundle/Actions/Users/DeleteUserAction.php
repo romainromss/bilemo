@@ -36,7 +36,7 @@ class DeleteUserAction extends AbstractAction
     }
 
     /**
-     * @Route("/clients/{client_id}/users/{id_user}", name="delete_user", methods={"DELETE"})
+     * @Route("/clients/{client_id}/users/{user_id}", name="delete_user", methods={"DELETE"})
      *
      * @param Request $request
      *

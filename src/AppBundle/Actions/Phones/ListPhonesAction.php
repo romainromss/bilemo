@@ -14,6 +14,7 @@ namespace AppBundle\Actions\Phones;
 
 use AppBundle\Actions\AbstractAction;
 use AppBundle\Domains\Phones\ListPhones\LoaderPhoneList;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -43,6 +44,9 @@ class ListPhonesAction extends AbstractAction
      */
     public function ListPhones()
     {
+        $id = Uuid::uuid4();
+        var_dump($id->toString());
+        die;
         $datas =  $this->loader->load();
         return $this->sendResponse($datas);
     }

@@ -35,8 +35,9 @@ class LoaderAddUser extends AbstractLoader
         $user = new  Users(
             $addUserInput->getName(),
             $addUserInput->getLastname(),
-            $addUserInput->getAdress(),
-            $addUserInput->getEmail()
+            $addUserInput->getEmail(),
+            $addUserInput->getCellPhone(),
+            $addUserInput->getClient()
         );
         $this->entityManager->persist($user);
         $this->entityManager->flush();

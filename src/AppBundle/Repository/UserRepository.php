@@ -29,7 +29,33 @@ class UserRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @param $userId
+     * @param $clientId
+     *
+     * @return mixed
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getUsersFromClient($clientId)
+    {
+        return$this->createQueryBuilder('u')
+            ->where('u.client = :id')
+            ->setParameter(':id', $clientId)
+            ->orderBy('u.createdAt', 'DESC')
+            ->setCacheable(true)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
+    /**
+     * @param $id
+     *
+     * @return mixed
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function getUserById($id)
     {
         return$this->createQueryBuilder('u')
@@ -39,6 +65,14 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
             ;
+    }
+
+    public function userExist($userId) {
+        return $this->createQueryBuilder('user')
+            ->where('user.id = :user_id')
+            ->setParameter('user_id', $userId)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
