@@ -15,8 +15,11 @@ namespace AppBundle\Actions\Phones;
 use AppBundle\Actions\AbstractAction;
 use AppBundle\Domains\Phones\DetailsPhone\LoaderDetailPhone;
 use AppBundle\Domains\Phones\DetailsPhone\RequestResolverDetailsPhone;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Swagger\Annotations as SWG;
 
 /**
  * Class DetailPhoneAction.
@@ -45,6 +48,48 @@ class DetailPhoneAction extends AbstractAction
     /**
      * @Route("/phones/{id}", name="details_phones", methods={"GET"})
      *
+     * @SWG\Response(
+     *     response="200",
+     *     description="Return the details of  one phone.",
+     *     @SWG\Schema(ref=@Model(type="Phone::class", groups={"details_phone"}))
+     * )
+     *
+     * @SWG\Response(
+     *     response="404",
+     *     description="No phone found, check your parameters."
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     type="string",
+     *     description="Id Phone"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="Brand",
+     *     in="query",
+     *     type="string",
+     *     description="Brand of phone"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="Memory",
+     *     in="query",
+     *     type="array",
+     *     description="Memories of phone"
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="Os",
+     *     in="query",
+     *     type="string",
+     *     description="Os of phone"
+     * )
+     *
+     * @SWG\Tag(name="Phone")
+     * @Security(name="Bearer")
+     *
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -57,5 +102,4 @@ class DetailPhoneAction extends AbstractAction
         $data = $this->loader->load($input);
         return $this->sendResponse($data);
     }
-
 }

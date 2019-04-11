@@ -17,6 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -58,15 +59,15 @@ class LoaderListUsers extends AbstractLoader
     {
         $clientId = $request->attributes->get('client_id');
 
-        /** @var  UserRepository $repository */
-        $repository = $this->getRepository(Users::class);
-        $data = $repository->getUsersFromClient($clientId);
-
         if(!$this->authorizationChecker->isGranted(ClientVoter::CLIENT_VOTER, $clientId)) {
             throw new AccessDeniedHttpException(
                 'vous ne pouvez pas consulter les utilisateurs'
             );
         }
+
+        /** @var  UserRepository $repository */
+        $repository = $this->getRepository(Users::class);
+        $data = $repository->getUsersFromClient($clientId);
 
         if (empty($data)) {
             return null;
