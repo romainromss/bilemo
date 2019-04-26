@@ -33,14 +33,11 @@ class LoaderDeleteUser extends AbstractLoader
     /**
      * @param DeleteUserInput $deleteUserInput
      *
-     * @return array
      */
     public function load(DeleteUserInput $deleteUserInput)
     {
         $user = $deleteUserInput->getUser();
         $this->entityManager->remove($user);
         $this->entityManager->flush();
-
-        return [];
     }
 }

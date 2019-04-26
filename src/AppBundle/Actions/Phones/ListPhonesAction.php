@@ -40,40 +40,19 @@ class ListPhonesAction extends AbstractAction
     }
 
     /**
-     * Returns list of phones.
+     * List of phones.
      *
      * @Route("/phones", name="list_phones", methods={"GET"})
      *
      * @SWG\Response(
      *     response="200",
      *     description="Returns the list of phones.",
-     *     @SWG\Schema(ref=@Model(type="Phone::class", groups={"list_phones"}))
+     *     @SWG\Schema(ref=@Model(type=AppBundle\Entity\Phone::class, groups={"list_phones"}))
      * )
      *
      * @SWG\Response(
      *     response="404",
      *     description="No phone found, check your parameters."
-     * )
-     *
-     * @SWG\Parameter(
-     *     name="Brand",
-     *     in="query",
-     *     type="string",
-     *     description="Brand of phone"
-     * )
-     *
-     * @SWG\Parameter(
-     *     name="Memory",
-     *     in="query",
-     *     type="array",
-     *     description="Memories of phone"
-     * )
-     *
-     * @SWG\Parameter(
-     *     name="Os",
-     *     in="query",
-     *     type="string",
-     *     description="Os of phone"
      * )
      *
      * @SWG\Tag(name="Phones")
@@ -84,6 +63,6 @@ class ListPhonesAction extends AbstractAction
     public function ListPhones()
     {
         $datas =  $this->loader->load();
-        return $this->sendResponse($datas);
+        return $this->sendResponse($datas, 200, [], true);
     }
 }

@@ -86,9 +86,9 @@ class Client extends AbstractEntity implements UserInterface
      */
     public function __construct(
         string $username,
+        string $password,
         string $name,
         string $lastname,
-        string $password,
         string $email,
         string $b2b
     ) {

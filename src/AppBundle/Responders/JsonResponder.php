@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace AppBundle\Responders;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -25,12 +26,17 @@ class JsonResponder
      * @param string|null $datas
      * @param int $statusCode
      * @param array $additionalHeaders
-     *
+     * @param bool $cacheable
+     * 
      * @return Response
      */
-    public static function response(?string $datas, int $statusCode = Response::HTTP_OK, array $additionalHeaders = [])
-    {
-        return new Response(
+    public static function response(
+        ?string $datas,
+        int $statusCode = Response::HTTP_OK,
+        array $additionalHeaders = [],
+        bool $cacheable = false
+    ) {
+        $response = new Response(
             $datas,
             $statusCode,
             array_merge(
@@ -40,5 +46,13 @@ class JsonResponder
                 ]
             )
         );
+
+        if ($cacheable) {
+            $response
+                ->setPublic()
+                ->setSharedMaxAge(3600)
+                ->setMaxAge(3600);
+        }
+        return $response;
     }
 }

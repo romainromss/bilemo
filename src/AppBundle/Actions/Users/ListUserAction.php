@@ -39,7 +39,7 @@ class ListUserAction extends AbstractAction
      *@SWG\Response(
      *     response="200",
      *     description="List of users.",
-     *      @SWG\Schema(ref=@Model(type="Users::class", groups={"list_users"}))
+     *      @SWG\Schema(ref=@Model(type=AppBundle\Entity\Users::class, groups={"list_users"}))
      * )
      * @SWG\Response(
      *     response="404",
@@ -66,6 +66,6 @@ class ListUserAction extends AbstractAction
     public function ListUsers(Request $request)
     {
         $datas =  $this->loader->load($request);
-        return $this->sendResponse($datas);
+        return $this->sendResponse($datas, 200, [], true);
     }
 }

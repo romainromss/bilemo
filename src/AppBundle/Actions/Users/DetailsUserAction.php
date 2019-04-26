@@ -45,7 +45,7 @@ class DetailsUserAction extends AbstractAction
      * @SWG\Response(
      *     response="200",
      *     description="details  one user.",
-     *      @SWG\Schema(ref=@Model(type="Users::class", groups={"details_user"}))
+     *      @SWG\Schema(ref=@Model(type=AppBundle\Entity\Users::class, groups={"details_user"}))
      * )
      *
      * @SWG\Response(
@@ -80,6 +80,6 @@ class DetailsUserAction extends AbstractAction
     {
         $input = $this->requestResolver->resolver($request);
         $data = $this->loader->load($input);
-        return $this->sendResponse($data);
+        return $this->sendResponse($data, 200, [], true);
     }
 }

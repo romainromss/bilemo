@@ -45,7 +45,8 @@ class AddUserAction extends AbstractAction
      * @SWG\Response(
      *     response="201",
      *     description=" A new user created.",
-     *     @SWG\Schema(ref=@Model(type="Users::class", groups={"add_user"}))
+     *     @SWG\Schema(ref=@Model(type=AppBundle\Entity\Users::class, groups={"add_user"})
+     *      )
      * )
      *
      * @SWG\Parameter(
@@ -60,7 +61,7 @@ class AddUserAction extends AbstractAction
      *     in="body",
      *     required=true,
      *     @SWG\Schema(
-     *          ref=@Model(type="Users::class", groups={"add_user"})
+     *          ref=@Model(type=AppBundle\Entity\Users::class, groups={"add_user"})
      *     )
      * )
      *

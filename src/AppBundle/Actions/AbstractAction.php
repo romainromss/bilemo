@@ -23,20 +23,23 @@ abstract  class AbstractAction
 {
     /**
      * @param string|null $datas
-     * @param int         $statusCode
-     * @param array       $addHeaders
+     * @param int $statusCode
+     * @param array $addHeaders
+     * @param bool $cacheable
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function sendResponse(
         ? string $datas,
         int $statusCode = 200,
-        $addHeaders = []
+        $addHeaders = [],
+        bool $cacheable = false
     ) {
         return JsonResponder::response(
             $datas,
             $statusCode,
-            $addHeaders
+            $addHeaders,
+            $cacheable
         );
     }
 }

@@ -79,7 +79,7 @@ class DeleteUserAction extends AbstractAction
     {
         $input = $this->requestResolverDeleteUser->resolver($request);
 
-        $data = $this->loader->load($input);
-        return $this->sendResponse(null, 204, $data);
+        $this->loader->load($input);
+        return $this->sendResponse(null, 204);
     }
 }

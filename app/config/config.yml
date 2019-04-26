@@ -79,3 +79,19 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: true
+nelmio_api_doc:
+    areas:
+        path_patterns: # an array of regexps
+            - ^/api(?!/doc$)
+    documentation:
+        info:
+            title: Bilemo API
+            description: This is mobile service products
+            version: 1.0.0
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Value should be : Bearer {Access token eventually get by /api/login_check'
+                name: Authorization
+                in: header
+                default: 'Bearer '

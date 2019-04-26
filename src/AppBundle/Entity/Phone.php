@@ -82,19 +82,22 @@ class Phone extends AbstractEntity
      *
      * @param string $name
      * @param string $description
-     * @param string $brand
-     * @param string $os
+     * @param array $memories
+     * @param Brand $brand
+     * @param Os $os
+     *
      * @throws \Exception
      */
     public function __construct(
         string $name,
         string $description,
-        string $brand,
-        string $os
+        array $memories,
+        Brand $brand,
+        Os $os
     ) {
         $this->name = $name;
         $this->description = $description;
-        $this->memory = new ArrayCollection();
+        $this->memory = new ArrayCollection($memories);
         $this->brand = $brand;
         $this->os = $os;
         parent::__construct();
@@ -117,17 +120,16 @@ class Phone extends AbstractEntity
     }
 
     /**
-     * @return ArrayCollection
+     * @return \ArrayAccess
      */
-    public function getMemory(): ArrayCollection
+    public function getMemory()
     {
         return $this->memory;
     }
 
     /**
-     * @return string
      */
-    public function getBrand(): string
+    public function getBrand()
     {
         return $this->brand;
     }

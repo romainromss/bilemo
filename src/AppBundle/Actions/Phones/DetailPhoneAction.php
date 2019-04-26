@@ -46,12 +46,14 @@ class DetailPhoneAction extends AbstractAction
     }
 
     /**
+     * Details of phone.
+     *
      * @Route("/phones/{id}", name="details_phones", methods={"GET"})
      *
      * @SWG\Response(
      *     response="200",
      *     description="Return the details of  one phone.",
-     *     @SWG\Schema(ref=@Model(type="Phone::class", groups={"details_phone"}))
+     *     @SWG\Schema(ref=@Model(type=AppBundle\Entity\Phone::class, groups={"details_phone"}))
      * )
      *
      * @SWG\Response(
@@ -66,26 +68,6 @@ class DetailPhoneAction extends AbstractAction
      *     description="Id Phone"
      * )
      *
-     * @SWG\Parameter(
-     *     name="Brand",
-     *     in="query",
-     *     type="string",
-     *     description="Brand of phone"
-     * )
-     *
-     * @SWG\Parameter(
-     *     name="Memory",
-     *     in="query",
-     *     type="array",
-     *     description="Memories of phone"
-     * )
-     *
-     * @SWG\Parameter(
-     *     name="Os",
-     *     in="query",
-     *     type="string",
-     *     description="Os of phone"
-     * )
      *
      * @SWG\Tag(name="Phone")
      * @Security(name="Bearer")
@@ -100,6 +82,6 @@ class DetailPhoneAction extends AbstractAction
     {
         $input = $this->requestResolver->resolver($request);
         $data = $this->loader->load($input);
-        return $this->sendResponse($data);
+        return $this->sendResponse($data, 200, [], true);
     }
 }
