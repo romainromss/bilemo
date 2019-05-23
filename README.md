@@ -27,4 +27,9 @@ with body
 
 
 now you have your token
+
+To Docs
+--------------
+http://localhost:port/api/doc
+
 Enjoy :)
