@@ -15,14 +15,15 @@ To install
 
 To Use
 --------------
+
 http://localhost:port/api/login_check 
 with body
-================
+```
 {
 	"username": "test",
-	"password": "12345678"
+	"password": "12345678"`
 }
-================
+```
 
 
 now you have your token
