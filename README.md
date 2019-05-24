@@ -1,5 +1,6 @@
 Bilemo
 ========================
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b7f2d8be76204676913357acbad6cbee)](https://www.codacy.com/app/romainromss_2/bilemo?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=romainromss/bilemo&amp;utm_campaign=Badge_Grade)
 
 To install
 --------------
