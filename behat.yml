@@ -1,0 +1,21 @@
+default:
+  suites:
+    default:
+      contexts:
+        - DoctrineContext:
+            doctrine: '@doctrine'
+            kernel: '@kernel'
+            encoderFactory: '@security.encoder_factory'
+        - CustomRestContext
+        - behatch:context:json:
+        - FeatureContext
+
+  extensions:
+    Behat\Symfony2Extension:
+      kernel:
+        class: AppKernel
+    Behat\MinkExtension:
+      sessions:
+        default:
+          symfony2: ~
+    Behatch\Extension: ~

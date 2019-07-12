@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: lexik_jwt_authentication.yaml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -18,7 +19,7 @@ framework:
     form: ~
     csrf_protection: ~
     validation: { enable_annotations: true }
-    #serializer: { enable_annotations: true }
+    serializer: { enable_annotations: true }
     default_locale: '%locale%'
     trusted_hosts: ~
     session:
@@ -52,11 +53,20 @@ doctrine:
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #path: '%database_path%'
+        types:
+            uuid:  Ramsey\Uuid\Doctrine\UuidType
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        mappings:
+            AppBundle\Entity:
+                type: annotation
+                dir: '%kernel.project_dir%/src/AppBundle/Entity'
+                is_bundle: false
+                prefix: AppBundle\Entity
+                alias: AppBundle
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -68,4 +78,20 @@ swiftmailer:
 
 sensio_framework_extra:
    router:
-        annotations: false
+        annotations: true
+nelmio_api_doc:
+    areas:
+        path_patterns: # an array of regexps
+            - ^/api(?!/doc$)
+    documentation:
+        info:
+            title: Bilemo API
+            description: This is mobile service products
+            version: 1.0.0
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Value should be : Bearer {Access token eventually get by /api/login_check'
+                name: Authorization
+                in: header
+                default: 'Bearer '

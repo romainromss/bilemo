@@ -12,20 +12,26 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity\Traits;
 
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Interface TimestampableTrait
+ *
+ * @author Romain Bayette <romainromss@posteo.net>
+ */
 trait TimestampableTrait
 {
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type='datetime)
+     * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type='datetime')
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updatedAt;
 
@@ -39,8 +45,9 @@ trait TimestampableTrait
 
     /**
      * @return \DateTime|null
+     *
      */
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): ? \DateTime
     {
         return $this->updatedAt;
     }

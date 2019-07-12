@@ -13,22 +13,28 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity\Traits;
 
+use JMS\Serializer\Annotation as Serializer;
+use Doctrine\ORM\Mapping as ORM;
 
-use Ramsey\Uuid\UuidInterface;
-
+/**
+ * Trait IdTrait
+ *
+ * @author Romain Bayette <romainromss@posteo.net>
+ */
 trait IdTrait
 {
     /**
-     * @var UuidInterface
+     * @var string
      *
-     * @ORM\Column(type='uuid')
+     * @Serializer\Type("uuid")
+     * @ORM\Id
+     * @ORM\Column(type="uuid")
+     * @Serializer\Groups({"list_phone", "details_user", "details_phone"})
      */
     protected $id;
 
-    /**
-     * @return UuidInterface
-     */
-    public function getId(): UuidInterface
+
+    public function getId()
     {
         return $this->id;
     }
