@@ -1,0 +1,92 @@
+AppBundle\Entity\Client:
+    client_1:
+        __construct: ["romain", "12345678", "romain", "baba", "<email()>", "<company()>"]
+    client_2:
+        __construct: ["<username()>", "12345678", "<name()>", "<lastname()>", "<email()>", "<company()>"]
+AppBundle\Entity\Users:
+    user_1:
+        __construct: ["<name()>", "<lastname()>", "<email()>", "<phoneNumber()>", "@client_1"]
+    user_2:
+        __construct: ["<name()>", "<lastname()>", "<email()>", "<phoneNumber()>", "@client_1"]
+    user_3:
+        __construct: ["<name()>", "<lastname()>", "<email()>", "<phoneNumber()>", "@client_1"]
+    user_4:
+        __construct: ["<name()>", "<lastname()>", "<email()>", "<phoneNumber()>", "@client_1"]
+    user_5:
+        __construct: ["<name()>", "<lastname()>", "<email()>", "<phoneNumber()>", "@client_1"]
+    user_6:
+        __construct: ["<name()>", "<lastname()>", "<email()>", "<phoneNumber()>", "@client_2"]
+    user_7:
+        __construct: ["<name()>", "<lastname()>", "<email()>", "<phoneNumber()>", "@client_2"]
+    user_8:
+        __construct: ["<name()>", "<lastname()>", "<email()>", "<phoneNumber()>", "@client_2"]
+    user_9:
+        __construct: ["<name()>", "<lastname()>", "<email()>", "<phoneNumber()>", "@client_2"]
+    user_10:
+        __construct: ["<name()>", "<lastname()>", "<email()>", "<phoneNumber()>", "@client_2"]
+
+AppBundle\Entity\Brand:
+    brand.apple:
+        __construct: ["Apple"]
+    brand.samsung:
+        __construct: ["Samsung"]
+    brand.huawei:
+        __construct: ["Huawei"]
+    brand.sony:
+        __construct: ["Sony"]
+    brand.honor:
+        __construct: ["Honor"]
+    brand.google:
+        __construct: ["Google"]
+    brand.blackberry:
+        __construct: ["BlackBerry"]
+    brand.nokia:
+        __construct: ["Nokia"]
+    brand.wiko:
+        __construct: ["Wiko"]
+    brand.motorola:
+        __construct: ["Motorola"]
+    brand.htc:
+        __construct: ["HTC"]
+
+AppBundle\Entity\Memory:
+    phone_memory.8:
+        __construct: ["8"]
+    phone_memory.16:
+        __construct: ["16"]
+    phone_memory.24:
+        __construct: ["24"]
+    phone_memory.32:
+        __construct: ["32"]
+    phone_memory.64:
+        __construct: ["64"]
+    phone_memory.128:
+        __construct: ["128"]
+    phone_memory.256:
+        __construct: ["256"]
+
+AppBundle\Entity\Os:
+    phone_os.ios:
+        __construct: ["iOs"]
+    phone_os.android:
+        __construct: ["Android"]
+    phone_os.windows:
+        __construct: ["Windows Phone"]
+
+AppBundle\Entity\Phone:
+    iphone_x_64:
+        __construct: ["Iphone X", "Nous avons toujours rêvé de créer un iPhone qui ne soit qu'écran. Un iPhone si immersif qu'il s'efface au profit de la seule expérience. Un iPhone si intelligent qu'il réponde à un geste, à la voix… et même à un regard. C'est chose faite aujourd'hui. Dites bonjour au futur.", ['@phone_memory.64'], '@brand.apple', '@phone_os.ios']
+    iphone_x_256:
+        __construct: ["Iphone X", "Nous avons toujours rêvé de créer un iPhone qui ne soit qu'écran. Un iPhone si immersif qu'il s'efface au profit de la seule expérience. Un iPhone si intelligent qu'il réponde à un geste, à la voix… et même à un regard. C'est chose faite aujourd'hui. Dites bonjour au futur.", ['@phone_memory.256'], '@brand.apple','@phone_os.ios']
+    iphone_6S_plus_32:
+        __construct: ["Iphone 6S Plus", "Il est fondamentalement différent. D'une part, l'iPhone et iOS 9 fonctionnent en parfaite synergie. Ils se complètent pour vous offrir une performance optimale. D'autre part, l'appareil photo de l'iPhone capture des photos et des vidéos d'une exceptionnelle qualité. Il n'est donc pas surprenant qu'il soit devenu l'appareil photo le plus populaire au monde. L'iPhone intègre également l'App Store, iCloud, FaceTime, Messages et Touch ID. Des fonctionnalités tellement pratiques qu'elles sont devenues indispensables. Enfin, l'iPhone est sécurisé. Et veille sur votre vie privée et votre santé. Le succès de l'iPhone tient à de nombreuses raisons, mais il relève d'un précepte unique, selon lequel un téléphone doit être simple et élégant. Et aussi un peu magique à utiliser.", ['@phone_memory.32'], '@brand.apple', '@phone_os.ios']
+    iphone_6S_plus_128:
+        __construct: ["Iphone 6S Plus", "Il est fondamentalement différent. D'une part, l'iPhone et iOS 9 fonctionnent en parfaite synergie. Ils se complètent pour vous offrir une performance optimale. D'autre part, l'appareil photo de l'iPhone capture des photos et des vidéos d'une exceptionnelle qualité. Il n'est donc pas surprenant qu'il soit devenu l'appareil photo le plus populaire au monde. L'iPhone intègre également l'App Store, iCloud, FaceTime, Messages et Touch ID. Des fonctionnalités tellement pratiques qu'elles sont devenues indispensables. Enfin, l'iPhone est sécurisé. Et veille sur votre vie privée et votre santé. Le succès de l'iPhone tient à de nombreuses raisons, mais il relève d'un précepte unique, selon lequel un téléphone doit être simple et élégant. Et aussi un peu magique à utiliser.", ['@phone_memory.128'], '@brand.apple', '@phone_os.ios']
+    samsung_S8_64:
+        __construct: ["Samsung Galaxy S8", "Samsung révèle une nouvelle technologie pour équiper le Galaxy S8 : l'écran Infinity. De type super AMOLED aux bordures incurvées avant et arrière permettant une prise en main au confort inédit et au raffinement visuel le distinguant de la concurrence. Révolution chez Samsung, l'écran tactile couvre quasiment l'intégralité de la dalle.", ['@phone_memory.64'], '@brand.samsung', '@phone_os.android']
+    samsung_S9_64:
+        __construct: ["Samsung Galaxy S9", "Profitez du nouveau Samsung Galaxy S9 et de ses capacités photographiques inégalées. Avec son nouvel appareil photo à grande ouverture f/1,5, l'objectif du Galaxy S9 capte le moindre rayon de lumière, même dans le noir. Captez de meilleures photos, même dans la pénombre. Le Super ralenti vidéo permet d'enregistrer des vidéos à 960 images par seconde, pour des vidéos ralenties incroyables.", ['@phone_memory.64'], '@brand.samsung', '@phone_os.android']
+    huawei_P20_pro_128:
+        __construct: ["P20 Pro", "La marque Huawei lance son nouveau smartphone P20 Pro, avec un design en verre au style épuré, aussi agréable au regard qu'au toucher. Avec le Huawei P20 Pro, version évoluée du tout dernier P20, la renaissance de la photographie se met en marche ! Son triple capteur photo conçu avec Leica de 40MP + 20MP + 8MP, vous promet des photos parfaites, même en basse lumière et son zoom hybride x5 vous permet de capter le moindre détail, même à distance. Son écran FullViewFHD+ de 6,1 pouces au format 19:9 vous permet de bénéficier de couleurs vives et de contrastes élevés.", ['@phone_memory.128'], '@brand.huawei', '@phone_os.android']
+    huawei_mate_20_128:
+        __construct: ["MATE 20", "Avec le HUAWEI Mate20, entrez dans un nouveau monde d'intelligence. Son processeur Kirin 980, doté d'Intelligence Artificielle, améliore drastiquement les performances et la rapidité d'exécution des tâches demandées. Pour une expérience mobile toujours plus fluide. Sa triple caméra conçue avec Leica de 12MP + 16MP + 8MP vous fera entrevoir de nouveaux horizons. Son téléobjectif de 8MP permettra un zoom hybride x5, alors que la nouvelle lentille ultra grand angle de 16MP capturera des images macro ou grand angle. Il embarque une batterie de 4000mAh, dotée de charge rapide permettant de charger la batterie à hauteur de 58% en seulement 30 minutes. Il dispose également d'un écran HUAWEI FullView de 6.53 pouces au format 18.7:9 . pour une immersion totale dans vos jeux et films.", ['@phone_memory.128'], '@brand.huawei', '@phone_os.android']
